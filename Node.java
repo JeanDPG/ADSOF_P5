@@ -45,5 +45,8 @@ public class Node<T> {
     public List<Condition<T>> getConditions(){
         return Collections.unmodifiableList(this.conditions);
     }
+    public boolean isLeaf() {
+        return conditions.isEmpty() && otherwise == null;
+    }
 
 }
