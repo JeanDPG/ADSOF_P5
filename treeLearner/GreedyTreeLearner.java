@@ -3,6 +3,8 @@ package treeLearner;
 import java.util.*;
 
 import datasets.Featurizer;
+import datasets.LabelProvider;
+import datasets.LabeledDataset;
 import decisionTree.*;
 
 /**

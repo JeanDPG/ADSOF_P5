@@ -1,4 +1,4 @@
-package treeLearner;
+package datasets;
 
 /**
  * LabelProvider.java
