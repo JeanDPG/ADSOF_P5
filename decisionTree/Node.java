@@ -29,6 +29,9 @@ public class Node<T> {
      * @param name Nombre identificador del nodo.
      */
     public Node(String name) {
+        if (name == null || name.isEmpty()) {
+        throw new IllegalArgumentException("Node name cannot be null or empty.");
+    }
         this.name = name;
         this.conditions = new ArrayList<>();
         this.otherwise = null;
@@ -42,6 +45,12 @@ public class Node<T> {
      * @return El propio nodo. Nos permite encadenar llamadas.
      */
     public Node<T> withCondition(String targetNode, Predicate<T> predicate) {
+        if (targetNode == null || targetNode.isEmpty()) {
+        throw new IllegalArgumentException("Target node name cannot be null or empty.");
+    }
+    if (predicate == null) {
+        throw new IllegalArgumentException("Condition predicate cannot be null.");
+    }
         this.conditions.add(new Condition<>(targetNode, predicate));
         return this;
     }
@@ -52,6 +61,9 @@ public class Node<T> {
      * @return El propio nodo para permitir encadenar llamadas.
      */
     public Node<T> otherwise(String target) {
+        if (target == null || target.isEmpty()) {
+        throw new IllegalArgumentException("Otherwise target cannot be null or empty.");
+    }
         this.otherwise = target;
         return this;
     }
@@ -59,21 +71,19 @@ public class Node<T> {
      /**
      * Determina cuál es el siguiente nodo para un elemento concreto.
      * Evalúa las condiciones en el orden en que fueron añadidas.
-     * No lanzamos una excepcion si no hay otherwise, ya que hemos considerado que es una
-     * situacion normal, y no queremos parar el programa.
+     * No lanzamos una excepcion si no hay otherwise, ya que consideramos que esto significa
+     * que el nodo es una hoja, cuando se llame desde el metodo predict.
      * @param element El objeto que esta recorriendo el arbol
      * @return El nombre del siguiente nodo, o el valor de otherwise, o null si se detiene.
      */
     public String nextNode(T element){
+        if (element == null) return otherwise; 
         for (Condition<T> c : conditions){
             if(c.test(element)){
                 return c.getTarget();
             }
         }
-            if(otherwise!=null){
-                return otherwise;
-            }
-            return null;
+        return otherwise; 
         }
 
     /**

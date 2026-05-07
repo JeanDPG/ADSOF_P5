@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>9</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>81</x>
+      <y>90</y>
+      <w>1233</w>
+      <h>630</h>
+    </coordinates>
+    <panel_attributes>decisionTree</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>243</x>
+      <y>207</y>
+      <w>468</w>
+      <h>153</h>
+    </coordinates>
+    <panel_attributes>DecisionTree&lt;T&gt;
+--
+- rootName: String
+--
++ node(name: String): Node&lt;T&gt;
++ predict(element: T): String
++ predict(dataset: Dataset&lt;T&gt;): Map&lt;String, List&lt;T&gt;&gt;
++ predict(elements: T...): Map&lt;String, List&lt;T&gt;&gt;
++ getPredicate(label: String): Predicate&lt;T&gt;
+- findPredicate(current: String, target: String, path: Predicate&lt;T&gt;): Predicate&lt;T&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>126</x>
+      <y>432</y>
+      <w>567</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>GreedyTreeLearner&lt;T,L&gt;
+--
+--
++ learn(dataset: LabeledDataset&lt;T, L&gt;): DecisionTree&lt;T&gt;
++ learn(objs: Collection&lt;T&gt;, f: Featurizer, lp: LabelProvider): DecisionTree&lt;T&gt;
+- learnRecursive(tree: DecisionTree, name: String, ds: LabeledDataset, feats: List&lt;String&gt;): void
+- split(ds: LabeledDataset, feat: String): Map&lt;Object, LabeledDataset&gt;
+- getMajorityLabel(ds: LabeledDataset): L</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>702</x>
+      <y>225</y>
+      <w>198</w>
+      <h>45</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+nodes
+m2=*</panel_attributes>
+    <additional_attributes>10.0;20.0;200.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>882</x>
+      <y>198</y>
+      <w>378</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>Node&lt;T&gt;
+--
+- name: String
+- otherwise: String
+--
++ withCondition(target: String, pred: Predicate&lt;T&gt;): Node&lt;T&gt;
++ otherwise(target: String): Node&lt;T&gt;
++ nextNode(element: T): String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>900</x>
+      <y>459</y>
+      <w>306</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>Condition&lt;T&gt;
+--
+- target: String
+
+--
++ test(element: T): boolean
++ getPredicate(): Predicate&lt;T&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>810</x>
+      <y>279</y>
+      <w>108</w>
+      <h>234</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+conditions
+m2=*</panel_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0;10.0;230.0;100.0;230.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>837</x>
+      <y>513</y>
+      <w>108</w>
+      <h>171</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+predicate</panel_attributes>
+    <additional_attributes>10.0;170.0;40.0;170.0;40.0;10.0;70.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>621</x>
+      <y>639</y>
+      <w>225</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;from package java.util.function&gt;&gt;
+Predicate&lt;T&gt;
+bg=light_gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>405</x>
+      <y>351</y>
+      <w>90</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>80.0;10.0;80.0;60.0;10.0;60.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>405</x>
+      <y>567</y>
+      <w>27</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>10.0;70.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>297</x>
+      <y>630</y>
+      <w>225</w>
+      <h>54</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;from package datasets&gt;&gt;
+LabeledDataset
+bg=light_gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

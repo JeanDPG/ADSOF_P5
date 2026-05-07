@@ -27,6 +27,9 @@ public class LabeledDataset<T, L> extends Dataset<T> {
      */
     public LabeledDataset(Featurizer<T> featurizer, LabelProvider<T, L> labelProvider) {
         super(featurizer);
+        if (labelProvider == null) {
+        throw new IllegalArgumentException("The LabelProvider cannot be null.");
+        }
         this.labelProvider = labelProvider;
     }
 
@@ -36,6 +39,9 @@ public class LabeledDataset<T, L> extends Dataset<T> {
      * @return La etiqueta asociada al objeto.
      */
     public L getLabel(T element) {
+        if (element == null) {
+        throw new IllegalArgumentException("Cannot get a label for a null element.");
+        }
         return labelProvider.getLabel(element);
     }
 
@@ -49,6 +55,7 @@ public class LabeledDataset<T, L> extends Dataset<T> {
      */
     public Set<L> getUniqueLabels() {
         return getElements().stream()
+                .filter(element -> element != null)
                 .map(element -> getLabel(element))
                 .collect(Collectors.toSet());
     }

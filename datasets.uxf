@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>7</zoom_level>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>161</x>
+      <y>196</y>
+      <w>945</w>
+      <h>462</h>
+    </coordinates>
+    <panel_attributes>datasets</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>833</x>
+      <y>231</y>
+      <w>238</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Interface&gt;&gt;
+Featurizer&lt;T&gt;
+--
+--
++featureNames(): List&lt;String&gt;
++featureValue(element: T, name: String): Comparable</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>476</x>
+      <y>238</y>
+      <w>252</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>Dataset&lt;T&gt;
+--
+-data: List&lt;T&gt;
+--
++ add(element: T): void
++ addAll(elements: T[]): void
++ addAll(elements: Collection&lt;? extends T&gt;): void
++ removeDuplicates(): void
++ feature(name: String): Feature&lt;V&gt;
++ feature(name: String, type: Class&lt;V&gt;): Feature&lt;V&gt;
+- rowValues(element: T): List&lt;Comparable&lt;?&gt;&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>721</x>
+      <y>259</y>
+      <w>126</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;160.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>595</x>
+      <y>350</y>
+      <w>21</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>476</x>
+      <y>406</y>
+      <w>252</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>LabeledDataset&lt;T,L&gt;
+--
+--
++ add(element: T): void
++ addAll(elements: T[]): void
++ addAll(elements: Collection&lt;? extends T&gt;): void
++ removeDuplicates(): void
++ feature(name: String): Feature&lt;V&gt;
++ feature(name: String, type: Class&lt;V&gt;): Feature&lt;V&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>721</x>
+      <y>427</y>
+      <w>133</w>
+      <h>21</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;170.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>840</x>
+      <y>406</y>
+      <w>238</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Functional Interface&gt;&gt;
+LabelProvider&lt;T,L&gt;
+--
+--
++getLabel(element: T): L</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>217</x>
+      <y>378</y>
+      <w>161</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>Feature&lt;S&gt;
+--
+--
++ min(): S
++ max(): S
++ distribution(): Map&lt;S, Integer&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>294</x>
+      <y>315</y>
+      <w>21</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>231</x>
+      <y>280</y>
+      <w>133</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;from package java.util&gt;&gt;
+ArrayList&lt;V&gt;
+bg=light_gray</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>371</x>
+      <y>280</y>
+      <w>119</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>150.0;10.0;60.0;10.0;60.0;200.0;10.0;200.0</additional_attributes>
+  </element>
+</diagram>

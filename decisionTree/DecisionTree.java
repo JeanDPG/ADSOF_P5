@@ -27,6 +27,9 @@ public class DecisionTree<T> {
      * @return El objeto Node.
      */
     public Node<T> node(String name) {
+        if (name == null || name.isEmpty()) {
+        throw new IllegalArgumentException("Node name cannot be null or empty.");
+        }
         if (rootName == null)
             rootName = name;
         if (!nodes.containsKey(name)) {
@@ -48,6 +51,7 @@ public class DecisionTree<T> {
             return null;
 
         Node<T> current = nodes.get(rootName);
+        if (current == null) return null;
         while (current != null) {
             String nextName = current.nextNode(element);
 
@@ -75,11 +79,14 @@ public class DecisionTree<T> {
      * @return Un mapa agrupando los elementos por cada etiqueta resultante.
      */
     public Map<String, List<T>> predict(Dataset<T> dataset) {
-        Map<String, List<T>> results = new LinkedHashMap<>();
-        for (T item : dataset.getElements()) {
-            String label = predict(item);
-            results.computeIfAbsent(label, k -> new ArrayList<>()).add(item);
+        if (dataset == null) {
+        throw new IllegalArgumentException("Dataset cannot be null.");
         }
+        Map<String, List<T>> results = new LinkedHashMap<>();
+        dataset.getElements().forEach(item -> {
+        String label = predict(item);
+        results.computeIfAbsent(label, k -> new ArrayList<>()).add(item);
+        });
         return results;
     }
 
@@ -95,6 +102,9 @@ public class DecisionTree<T> {
      */
     @SafeVarargs
     public final Map<String, List<T>> predict(T... elements) {
+        if (elements == null) {
+        throw new IllegalArgumentException("Elements array cannot be null.");
+        }
         Map<String, List<T>> results = new LinkedHashMap<>();
         for (T element : elements) {
             String label = predict(element);
@@ -113,6 +123,9 @@ public class DecisionTree<T> {
      * @return Un Predicate que valida si un objeto pertenece a esa clasificación.
      */
     public Predicate<T> getPredicate(String label) {
+        if (label == null || label.isEmpty()) {
+        throw new IllegalArgumentException("Label cannot be null or empty.");
+        }
         return findPredicate(rootName, label, x -> true);
     }
 
