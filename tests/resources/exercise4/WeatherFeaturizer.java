@@ -1,4 +1,4 @@
-package treeLearner;
+package tests.resources.exercise4;
 import datasets.*;
 import java.util.*;
 

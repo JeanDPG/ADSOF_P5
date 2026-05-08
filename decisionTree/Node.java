@@ -16,7 +16,7 @@ import java.util.Collections;
  * @version 1.0
  * @param <T> El tipo de objeto que procesa el nodo.
  */
-public class Node<T> {
+public class Node<T> implements Visitable {
     /** Condiciones para saber hacia donde ir */
     private List<Condition<T>> conditions;
     /** Nombre del nodo que lo identifica */
@@ -108,6 +108,16 @@ public class Node<T> {
      */
     public List<Condition<T>> getConditions(){
         return Collections.unmodifiableList(this.conditions);
+    }
+
+    /**
+     * Permite que un visitante procese este nodo.
+     * @param visitor El visitante que procesara el nodo.
+     */
+    public void accept(TreeVisitor<?> visitor) {
+        @SuppressWarnings("unchecked")
+        TreeVisitor<T> v = (TreeVisitor<T>) visitor;
+        v.visit(this);
     }
 
     @Override

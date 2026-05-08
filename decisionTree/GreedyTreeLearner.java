@@ -1,16 +1,17 @@
-package treeLearner;
+package decisionTree;
 
 import java.util.*;
 
 import datasets.Featurizer;
 import datasets.LabelProvider;
 import datasets.LabeledDataset;
-import decisionTree.*;
+import strategies.FeatureStrategy;
+import strategies.RandomStrategy;
 
 /**
  * GreedyTreeLearner.java
  * 
- * Clase encargada de generar automáticamente un árbol de decisión a partir
+ * Clase encargada de generar un árbol de decisión a partir
  * de un dataset etiquetado, o los datos necesarios para generar dicho dataset.
  * Utiliza un algoritmo recursivo (greedy) que divide los datos según las
  * características disponibles hasta alcanzar nodos puros o agotar las opciones
@@ -23,13 +24,26 @@ import decisionTree.*;
  * @param <L> Tipo de etiqueta que el árbol aprenderá a predecir.
  */
 public class GreedyTreeLearner<T, L> {
+    private FeatureStrategy<T, L> strategy = new RandomStrategy<>(); // Estrategia por defecto
 
     /**
-     * Inicia el proceso de aprendizaje a partir de un LabeledDataset. Obtenemos
+     * Establece la estrategia de seleccion de caracteristicas.
+     * @param strategy La estrategia a usar.
+     * @return El propio learner para encadenar llamadas.
+     */
+    public GreedyTreeLearner<T, L> setStrategy(FeatureStrategy<T, L> strategy) {
+        if (strategy != null) {
+            this.strategy = strategy;
+        }
+        return this;
+    }
+
+    /**
+     * Inicia el proceso de construcción a partir de un LabeledDataset. Obtenemos
      * toda la informacion que necesita la funcion learnRecursive
      * 
      * @param dataset El conjunto de datos de entrenamiento.
-     * @return Un DecisionTree configurado automáticamente.
+     * @return Un DecisionTree configurado.
      */
     public DecisionTree<T> learn(LabeledDataset<T, L> dataset) {
         if (dataset == null) {
@@ -52,7 +66,7 @@ public class GreedyTreeLearner<T, L> {
      * @param objects       Colección de objetos para crear el arbol
      * @param featurizer    El extractor de características.
      * @param labelProvider El proveedor de etiquetas.
-     * @return Un DecisionTree configurado automáticamente.
+     * @return Un DecisionTree configurado.
      */
     public DecisionTree<T> learn(Collection<T> objects, Featurizer<T> featurizer, LabelProvider<T, L> labelProvider) {
         if (objects == null || featurizer == null || labelProvider == null) {
@@ -64,7 +78,7 @@ public class GreedyTreeLearner<T, L> {
     }
 
     /**
-     * Método recursivo del algoritmo de aprendizaje usando un enfoque greedy.
+     * Método recursivo del algoritmo de construcción usando un enfoque greedy.
      * 
      * @param tree              El árbol que se está construyendo.
      * @param nodeName          Nombre del nodo actual.
@@ -98,7 +112,16 @@ public class GreedyTreeLearner<T, L> {
          * lista,
          * para que en la recursion no se vuelva a usar
          */
-        String featureName = availableFeatures.get(0);
+        /*
+         * Usamos la estrategia para obtener la mejor caracteristica.
+         * Si la estrategia no devuelve nada, usamos la primera por defecto.
+         */
+        String selectedFeature = strategy.execute(dataset, availableFeatures);
+        if (selectedFeature == null) {
+            selectedFeature = availableFeatures.get(0);
+        }
+        
+        final String featureName = selectedFeature;
         List<String> remainingFeatures = new ArrayList<>(availableFeatures);
         remainingFeatures.remove(featureName);
 
@@ -188,9 +211,15 @@ public class GreedyTreeLearner<T, L> {
             L label = ds.getLabel(item);
             counts.put(label, counts.getOrDefault(label, 0L) + 1);
         }
-        return counts.entrySet().stream()
-                .max((entry1, entry2) -> entry1.getValue().compareTo(entry2.getValue()))
-                .map(entry -> entry.getKey())
-                .orElse(null);
+        
+        L majority = null;
+        long maxCount = -1;
+        for (Map.Entry<L, Long> entry : counts.entrySet()) {
+            if (entry.getValue() > maxCount) {
+                maxCount = entry.getValue();
+                majority = entry.getKey();
+            }
+        }
+        return majority;
     }
 }

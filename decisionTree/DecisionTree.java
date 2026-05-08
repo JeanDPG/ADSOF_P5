@@ -167,6 +167,22 @@ public class DecisionTree<T> {
         return null;
     }
 
+    /**
+     * Obtiene todos los nodos del árbol.
+     * @return Mapa de nombres de nodos a objetos Node.
+     */
+    public Map<String, Node<T>> getNodes() {
+        return Collections.unmodifiableMap(nodes);
+    }
+
+    /**
+     * Obtiene el nombre del nodo raíz.
+     * @return El nombre del nodo raíz.
+     */
+    public String getRootName() {
+        return rootName;
+    }
+
     @Override
 public String toString() {
     StringBuilder sb = new StringBuilder("Decision Tree Structure:\n");

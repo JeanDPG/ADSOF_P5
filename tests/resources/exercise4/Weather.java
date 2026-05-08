@@ -1,4 +1,4 @@
-package treeLearner;
+package tests.resources.exercise4;
 public class Weather {
     private final WeatherCondition condition;
     private final Temperature temperature;
